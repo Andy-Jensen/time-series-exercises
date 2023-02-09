@@ -66,3 +66,13 @@ def opsd():
         df=pd.read_csv('https://raw.githubusercontent.com/jenfly/opsd/master/opsd_germany_daily.csv')
         df.to_csv('OPSD.csv', index=False)
         return df
+    
+
+def get_opsd():
+    op=opsd()
+    op['Date']=pd.to_datetime(op['Date'])
+    op=op.set_index('Date')
+    op['month']=op.index.strftime('%B')
+    op['year']=op.index.strftime('%Y')
+    op=op.fillna(0)
+    return op
